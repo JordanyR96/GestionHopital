@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://edube.org/uploads/media/default/0001/04/web-favicon.png">
+    <title>Decouverte Mondiale</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 32px 16px;
+            color: #17324d;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eaf6ff, #f7fbff);
+        }
+
+        header,
+        main {
+            width: min(900px, 100%);
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        header {
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+            color: #0b5685;
+        }
+
+        header p {
+            margin: 8px 0;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: 0;
+            border-radius: 999px;
+            color: #fff;
+            font-size: 1rem;
+            background: #0b79b7;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgb(11 121 183 / 25%);
+        }
+
+        button:hover {
+            background: #095f90;
+        }
+
+        .map-container {
+            overflow: hidden;
+            width: 100%;
+            border: 8px solid #fff;
+            border-radius: 20px;
+            background: #d7efff;
+            box-shadow: 0 10px 30px rgb(23 50 77 / 18%);
+        }
+
+        .map-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        #discoveryMessage {
+            min-height: 24px;
+            margin: 20px 0 0;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: #16415f;
+            background: #dff3ff;
+        }
+    </style>
+    <script src="Decouverte_mondiale.js"></script>
+</head>
+<body>
+    <header>
+        <h1>&#x1F30E; Decouverte Mondiale</h1>
+        <p>Bienvenue dans votre voyage de découverte du monde !</p>
+        <p>Cliquez sur le bouton pour voir le continent que vous souhaitez explorer et votre localisation.</p>
+        <br><br>
+        <button id="discoverLocation">Découvrir l’emplacement </button>
+        <br><br>
+    </header>
+    
+    <main>
+        <div class="map-container">
+            <img src="https://edube.org/uploads/media/default/0001/04/continents.jpg"
+                 usemap="#worldmap" alt="Carte des continents du monde">
+        </div>
+        <map name="worldmap" id="worldmap">
+                <area target="_self" rel="noopener" alt="Afrique" title="Afrique" id="africa"
+                     href="#" coords="200,100,300,200" 
+                      shape="rect">
+                <area target="_self" rel="noopener" alt="Amérique du Nord" title="Amérique du Nord" id="northAmerica"
+                     href="#" coords="50,50,150,150" 
+                      shape="rect">
+                <area target="_self" rel="noopener" alt="Amérique du Sud" title="Amérique du Sud" id="southAmerica"
+                     href="#" coords="50,200,150,300" 
+                      shape="rect">
+                <area target="_self" rel="noopener" alt="Asie" title="Asie" id="asia"
+                     href="#" coords="400,50,500,150" 
+                      shape="rect">
+                <area target="_self" rel="noopener" alt="Caraibe" title="Caraibe" id="caribbean"
+                     href="#" coords="300,50,400,150" 
+                      shape="rect">
+                <area target="_self" rel="noopener" alt="Europe" title="Europe" id="europe"
+                     href="#" coords="300,0,400,100" 
+                      shape="rect">
+                <area target="_self" rel="noopener" alt="Océanie" title="Océanie" id="oceania"
+                     href="#" coords="500,200,600,300" 
+                      shape="rect">
+                <area target="_self" rel="noopener" alt="Australie" title="Australie" id="australia"
+                     href="#" coords="500,300,600,400" 
+                      shape="rect">
+                <area target="_self" rel="noopener" alt="Antarctique" title="Antarctique" id="antarctica"
+                     href="#" coords="200,400,300,500" 
+                      shape="rect">
+            </map>
+    </main>
+</body>
+</html>
