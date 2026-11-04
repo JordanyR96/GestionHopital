@@ -3,6 +3,11 @@ package gestionHopital;
 import java.util.Map;
 
 public class Medecin extends Personne {
+    // Sèvi lè n ap relire Medecin la epi retabli ID li te genyen an.
+    public Medecin(int id, String nom, String prenom, String sexe,
+            String adresse, String dateNaissance) {
+        super(id, nom, prenom, sexe, adresse, dateNaissance);
+    }
 
     // Kont doktè a genyen pou li konekte nan sistèm nan
     private Utilisateur utilisateur;
@@ -43,3 +48,4 @@ public class Medecin extends Personne {
         }
     }
 }
+

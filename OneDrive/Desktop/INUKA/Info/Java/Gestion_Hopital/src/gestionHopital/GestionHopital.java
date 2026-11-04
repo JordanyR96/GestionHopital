@@ -34,6 +34,10 @@ public class GestionHopital {
     // PWOGRAM PRINCIPAL LA
     // =========================
     public static void main(String[] args) {
+        GestionFichiers.chargerPatients();
+        GestionFichiers.chargerMedecins();
+        GestionFichiers.chargerInfirmiers();
+        GestionFichiers.chargerDossiers();
 
         int choix;
 
@@ -167,6 +171,7 @@ public class GestionHopital {
             patients.put(patient.getId(), patient);
 
             personnes.add(patient);
+            GestionFichiers.sauvegarderPatients();
 
             System.out.println("Pasyan an ajoute avek sikse.");
 
@@ -204,6 +209,7 @@ public class GestionHopital {
 
         System.out.print("Nouvo adres : ");
         patient.setAdresse(scanner.nextLine());
+        GestionFichiers.sauvegarderPatients();
 
         System.out.println("Pasyan an modifye avek sikse");
     }
@@ -224,6 +230,7 @@ public class GestionHopital {
         if (supprime == null) {
             System.out.println("Pasyan a pa jwenn.");
         } else {
+            GestionFichiers.sauvegarderPatients();
             System.out.println("Pasyan a efase avek sikse.");
         }
     }
@@ -320,8 +327,8 @@ public class GestionHopital {
         );
 
         medecins.put(medecin.getId(), medecin);
-
         personnes.add(medecin);
+        GestionFichiers.sauvegarderMedecins();
 
         System.out.println("Dokte a ajoute avek sikse.");
     }
@@ -355,6 +362,7 @@ public class GestionHopital {
 
         System.out.print("Nouvo adres : ");
         medecin.setAdresse(scanner.nextLine());
+        GestionFichiers.sauvegarderMedecins();
 
         System.out.println("Dokte a modifye avek sikse.");
     }
@@ -375,6 +383,7 @@ public class GestionHopital {
         if (supprime == null) {
             System.out.println("Dokte pa jwenn.");
         } else {
+            GestionFichiers.sauvegarderMedecins();
             System.out.println("Dokte a efase avek sikse.");
         }
     }
@@ -469,6 +478,7 @@ public class GestionHopital {
         infirmiers.put(infirmier.getId(), infirmier);
 
         personnes.add(infirmier);
+        GestionFichiers.sauvegarderInfirmier();
 
         System.out.println("Enfimye a ajoute avek sikse.");
     }
@@ -502,6 +512,7 @@ public class GestionHopital {
 
         System.out.print("Nouvo adres : ");
         infirmier.setAdresse(scanner.nextLine());
+        GestionFichiers.sauvegarderInfirmier();
 
         System.out.println("Enfimye a modifye ave sikse.");
     }
@@ -523,6 +534,7 @@ public class GestionHopital {
             System.out.println("ID a pa valab.");
             return;
         } else {
+            GestionFichiers.sauvegarderInfirmier();
             System.out.println("Enfimyea efase avek sikse.");
         }
     }
@@ -664,6 +676,7 @@ public class GestionHopital {
         }
 
         dossiers.put(numero, dossier);
+        GestionFichiers.sauvegarderDossiers();
 
         System.out.println("Dosye a ajoute ave sikse.");
     }
@@ -691,6 +704,7 @@ public class GestionHopital {
 
         System.out.print("Nouvo deskripsyon : ");
         dossierTrouve.setDescription(scanner.nextLine());
+        GestionFichiers.sauvegarderDossiers();
 
         System.out.println("Dosye a modifye avèk siksè.");
     }
@@ -711,6 +725,7 @@ public class GestionHopital {
         if (supprime == null) {
             System.out.println("Dosye a pa jwenn.");
         } else {
+            GestionFichiers.sauvegarderDossiers();
             System.out.println("Dosye a efase avek sikse.");
         }
     }

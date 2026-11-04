@@ -4,7 +4,7 @@ import java.util.Map;
 
 public abstract class Personne {
 
-    private static int comptId = 1;
+    private static int prochainId = 1;
     // Atribi prive yo pou pwoteje done yo (enkapsilasyon)
     private final int id;
     private String nom;
@@ -13,10 +13,20 @@ public abstract class Personne {
     private String adresse;
     private final String dateNaissance;
 
-    // Konstriktè klas Personne lan
+    // Konstriktè sa a bay yon nouvo ID pou chak nouvo moun.
     public Personne(String nom, String prenom, String sexe, String adresse, String dateNaissance) {
-        this.id = comptId;
-        comptId++;
+        this(prochainId, nom, prenom, sexe, adresse, dateNaissance);
+    }
+
+    // Sèvi lè n ap relire yon moun epi retabli ID ki te anrejistre a.
+    public Personne(int id, String nom, String prenom, String sexe, String adresse, String dateNaissance) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID a dwe pi gran pase zewo.");
+        }
+        this.id = id;
+        if (id >= prochainId) {
+            prochainId = id + 1;
+        }
         this.nom = nom;
         this.prenom = prenom;
         this.sexe = sexe;
@@ -56,7 +66,6 @@ public abstract class Personne {
         return adresse;
     }
 
-    // Getter pou non an
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
@@ -65,10 +74,8 @@ public abstract class Personne {
         return dateNaissance;
     }
 
-    // Definisyon yon metòd abstrè
     public abstract void accederAuxInformations(Map<Integer, Dossier> dossiers);
 
-    // Montre enfòmasyon jeneral moun nan
     public void afficherInformations() {
         System.out.println("ID : " + getId());
         System.out.println("Non : " + getNom());
@@ -78,7 +85,6 @@ public abstract class Personne {
         System.out.println("Dat nesans : " + getDateNaissance());
     }
 
-    // Surcharge metòd afficherInformations lan
     public void afficherInformations(String maladie) {
         afficherInformations();
         System.out.println("Maladi : " + maladie);
