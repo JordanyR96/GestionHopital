@@ -93,4 +93,18 @@ public class Dossier {
             );
         }
     }
+
+    // Montre yon rezime kout pou lis enfòmasyon moun yo.
+    public void afficherRezime() {
+        System.out.println("  Dosye #" + numeroDossier + " — " + maladie);
+        System.out.println("    Deskripsyon : " + description);
+        System.out.println("    Pasyan : " + patient.getNom() + " " + patient.getPrenom());
+
+        if (medecin != null) {
+            System.out.println("    Dokte : " + medecin.getNom() + " " + medecin.getPrenom());
+        }
+        if (infirmier != null) {
+            System.out.println("    Enfimye : " + infirmier.getNom() + " " + infirmier.getPrenom());
+        }
+    }
 }

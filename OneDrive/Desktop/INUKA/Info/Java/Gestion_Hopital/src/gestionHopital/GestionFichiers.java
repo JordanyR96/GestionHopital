@@ -5,6 +5,7 @@ import static gestionHopital.GestionHopital.personnes;
 import static gestionHopital.GestionHopital.medecins;
 import static gestionHopital.GestionHopital.infirmiers;
 import static gestionHopital.GestionHopital.dossiers;
+import static gestionHopital.GestionHopital.utilisateurs;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -168,7 +169,10 @@ public class GestionFichiers {
         }
     }
 
-    // Li dosye yo apre chajman pasyan, dokte ak enfimye yo.
+    /*
+     * Chaje fichye dosye yo apre chajman pasyan, dokte ak enfimye yo.
+     * Lòd sa a enpòtan paske dosye yo sèvi ak ID moun sa yo pou kreye lyen yo.
+     */
     public static void chargerDossiers() {
         File fichier = new File("dossiers.txt");
         if (!fichier.exists()) {
@@ -193,6 +197,8 @@ public class GestionFichiers {
                     int idPatient = Integer.parseInt(champs[3]);
                     int idMedecin = Integer.parseInt(champs[4]);
                     int idInfirmier = Integer.parseInt(champs[5]);
+
+                    // Rekreye lyen yo ak moun ki deja nan kat yo.
                     Patient patient = patients.get(idPatient);
                     if (patient == null) {
                         System.out.println("Pasyan " + idPatient + " pou dosye " + numero + " pa jwenn.");
@@ -241,6 +247,59 @@ public class GestionFichiers {
             }
         } catch (IOException e) {
             System.out.println("Pa kapab anrejistre dossiers.txt: " + e.getMessage());
+        }
+    }
+
+    /*
+     * Recharge les comptes depuis utilisateurs.txt au démarrage.
+     * Chaque ligne contient identifiant|sel|empreinte du mot de passe.
+     * Le mot de passe original n'est jamais enregistré.
+     */
+    public static void chargerUtilisateurs() {
+        File fichier = new File("utilisateurs.txt");
+        if (!fichier.exists()) {
+            return;
+        }
+
+        try (Scanner lecteur = new Scanner(fichier)) {
+            while (lecteur.hasNextLine()) {
+                String ligne = lecteur.nextLine();
+                if (ligne.trim().isEmpty()) {
+                    continue;
+                }
+
+                // Découpe la ligne en trois champs séparés par le caractère |.
+                String[] champs = ligne.split("\\|", -1);
+                if (champs.length != 3) {
+                    System.out.println("Liy itilizate sa a pa valab.");
+                    continue;
+                }
+
+                try {
+                    Utilisateur utilisateur = Utilisateur.depiFichye(champs[0], champs[1], champs[2]);
+                    utilisateurs.put(utilisateur.getIdentifiant(), utilisateur);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Done itilizate sa a pa valab.");
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Pa kapab li utilisateurs.txt: " + e.getMessage());
+        }
+    }
+
+    /*
+     * Enregistre tous les comptes après un ajout, une modification ou une suppression.
+     * Le sel et l'empreinte permettent de vérifier un mot de passe sans le stocker.
+     */
+    public static void sauvegarderUtilisateurs() {
+        try (PrintWriter sortie = new PrintWriter(new FileWriter("utilisateurs.txt"))) {
+            for (Utilisateur utilisateur : utilisateurs.values()) {
+                sortie.println(utilisateur.getIdentifiant() + "|"
+                        + utilisateur.getSelEncode() + "|"
+                        + utilisateur.getEmpreinteEncode());
+            }
+        } catch (IOException e) {
+            System.out.println("Pa kapab anrejistre utilisateurs.txt: " + e.getMessage());
         }
     }
 }

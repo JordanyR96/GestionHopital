@@ -30,21 +30,19 @@ public class Medecin extends Personne {
         return utilisateur;
     }
 
-    // Redefinisyon metòd abstrè ki soti nan Personne
+    // Montre rezime dosye kote doktè sa a asosye.
     @Override
     public void accederAuxInformations(Map<Integer, Dossier> dossiers) {
-        System.out.println(
-                "Doktè a ap konsilte enfòmasyon medikal pasyan an."
-        );
         boolean trouve = false;
+        System.out.println("\nDosye medikal kote dokte sa a asosye :");
         for (Dossier d : dossiers.values()) {
             if (d.getMedecin() == this) {
-                d.afficherDossier();
+                d.afficherRezime();
                 trouve = true;
             }
         }
         if (!trouve) {
-            System.out.println("Poko gen dosye pou dokte.");
+            System.out.println("  Pa gen dosye medikal pou dokte sa a.");
         }
     }
 }

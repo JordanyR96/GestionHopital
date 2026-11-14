@@ -14,19 +14,19 @@ public class Patient extends Personne {
         super(nom, prenom, sexe, adresse, dateNaissance);
     }
 
-    // Redefinisyon metòd abstrè ki soti nan klas Personne lan
+    // Montre enfòmasyon pasyan an ak rezime dosye ki asosye avè l.
     @Override
     public void accederAuxInformations(Map<Integer, Dossier> dossiers) {
         boolean trouve = false;
-        System.out.println("Pasyan an ap konsilte dosye li.");
+        System.out.println("\nDosye medikal ki asosye ak pasyan sa a :");
         for (Dossier d : dossiers.values()) {
             if (d.getPatient() == this) {
-                d.afficherDossier();
+                d.afficherRezime();
                 trouve = true;
             }
         }
         if (!trouve) {
-            System.out.println("Pa gen dosye.");
+            System.out.println("  Pa gen dosye medikal pou pasyan sa a.");
         }
     }
 }
