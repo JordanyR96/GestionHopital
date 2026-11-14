@@ -38,6 +38,8 @@ public class GestionHopital {
         GestionFichiers.chargerMedecins();
         GestionFichiers.chargerInfirmiers();
         GestionFichiers.chargerDossiers();
+        // Recharge les comptes sauvegardés avant d'afficher le menu.
+        GestionFichiers.chargerUtilisateurs();
 
         int choix;
 
@@ -235,20 +237,24 @@ public class GestionHopital {
         }
     }
 
+    // Montre lis tout pasyan yo nan menm fòma a, ak kantite total la.
     public static void afficherPatients() {
-
         if (patients.isEmpty()) {
             System.out.println("Pa gen okenn pasyan ki anrejistre.");
             return;
         }
 
-        System.out.println("\n===== LIS PASYAN YO =====");
+        System.out.println("\n==================================================");
+        System.out.println("              LIS PASYAN YO");
+        System.out.println("Kantite pasyan : " + patients.size());
+        System.out.println("==================================================");
 
+        int numero = 1;
         for (Patient patient : patients.values()) {
+            System.out.println("\n--- PASYAN " + numero++ + " | ID : " + patient.getId() + " ---");
             patient.afficherInformations();
-            System.out.println();
         }
-
+        System.out.println("\n==================================================");
     }
 
     // =====================================================
@@ -388,19 +394,24 @@ public class GestionHopital {
         }
     }
 
+    // Montre lis doktè yo nan menm fòma ak lis pasyan yo.
     public static void afficherMedecins() {
-
         if (medecins.isEmpty()) {
             System.out.println("Pa gen okenn dokte ki anrejistre.");
             return;
         }
 
-        System.out.println("\n===== LIS DOKTE YO =====");
+        System.out.println("\n==================================================");
+        System.out.println("              LIS DOKTE YO");
+        System.out.println("Kantite dokte : " + medecins.size());
+        System.out.println("==================================================");
 
+        int numero = 1;
         for (Medecin medecin : medecins.values()) {
+            System.out.println("\n--- DOKTE " + numero++ + " | ID : " + medecin.getId() + " ---");
             medecin.afficherInformations();
-            System.out.println();
         }
+        System.out.println("\n==================================================");
     }
 
     // =====================================================
@@ -539,19 +550,24 @@ public class GestionHopital {
         }
     }
 
+    // Montre lis enfimyè yo nan menm fòma ak lòt lis moun yo.
     public static void afficherInfirmiers() {
-
         if (infirmiers.isEmpty()) {
             System.out.println("Pa gen okenn enfimye ki anrejistre.");
             return;
         }
 
-        System.out.println("\n===== LIS ENFIMYE YO =====\n");
+        System.out.println("\n==================================================");
+        System.out.println("              LIS ENFIMYE YO");
+        System.out.println("Kantite enfimye : " + infirmiers.size());
+        System.out.println("==================================================");
 
+        int numero = 1;
         for (Infirmier infirmier : infirmiers.values()) {
+            System.out.println("\n--- ENFIMYE " + numero++ + " | ID : " + infirmier.getId() + " ---");
             infirmier.afficherInformations();
-            System.out.println();
         }
+        System.out.println("\n==================================================");
     }
 
     // =====================================================
@@ -610,8 +626,14 @@ public class GestionHopital {
 
         int numero = Utils.ajouterDossier();
 
+        // Utils retounen -1 si antre a pa yon nonb; zewo ak nimewo negatif pa valab.
+        if (numero <= 0) {
+            System.out.println("Nimewo dosye a pa valab. Antre yon nonb antye pozitif.");
+            return;
+        }
+
         if (dossiers.containsKey(numero)) {
-            System.out.println("Nimero dosye sa a deja agziste.");
+            System.out.println("Nimewo dosye sa a deja egziste.");
             return;
         }
 
@@ -706,7 +728,7 @@ public class GestionHopital {
         dossierTrouve.setDescription(scanner.nextLine());
         GestionFichiers.sauvegarderDossiers();
 
-        System.out.println("Dosye a modifye avèk siksè.");
+        System.out.println("Dosye a modifye avek sikse.");
     }
 
     public static void supprimerDossier() {
@@ -750,9 +772,34 @@ public class GestionHopital {
             System.out.println("Pa gen moun ki anregistre.");
             return;
         }
+
+        System.out.println("\n==================================================");
+        System.out.println("          ENFOMASYON SOU TOUT MOUN YO");
+        System.out.println("==================================================");
+        System.out.println("Kantite moun ki anrejistre : " + personnes.size());
+
         for (Personne personne : personnes) {
+            System.out.println("\n--------------------------------------------------");
+            System.out.println(jwennKaliteMoun(personne) + " | ID : " + personne.getId());
+            System.out.println("--------------------------------------------------");
+            personne.afficherInformations();
             personne.accederAuxInformations(dossiers);
         }
+        System.out.println("\n==================================================");
+    }
+
+    // Bay chak moun yon tit ki koresponn ak klas li.
+    private static String jwennKaliteMoun(Personne personne) {
+        if (personne instanceof Patient) {
+            return "PASYAN";
+        }
+        if (personne instanceof Medecin) {
+            return "DOKTE";
+        }
+        if (personne instanceof Infirmier) {
+            return "ENFIMYE";
+        }
+        return "MOUN";
     }
 
     // =====================================================
@@ -812,6 +859,11 @@ public class GestionHopital {
         System.out.print("Idantifyan : ");
         String identifiant = scanner.nextLine();
 
+        if (!Utilisateur.identifiantValide(identifiant)) {
+            System.out.println("Idantifyan an pa valab. Pa itilize | oswa antre yon liy vid.");
+            return;
+        }
+
         if (utilisateurs.containsKey(identifiant)) {
             System.out.println("Idantifyan sa a deja agziste.");
             return;
@@ -819,13 +871,18 @@ public class GestionHopital {
 
         System.out.print("Modpas : ");
         String motDePasse = scanner.nextLine();
+        if (motDePasse.isEmpty()) {
+            System.out.println("Modpas la pa ka vid.");
+            return;
+        }
 
         Utilisateur utilisateur = new Utilisateur(
                 identifiant,
                 motDePasse
         );
-
         utilisateurs.put(identifiant, utilisateur);
+        // Enregistre le nouveau compte sans écrire le mot de passe en clair.
+        GestionFichiers.sauvegarderUtilisateurs();
 
         System.out.println("Itilizate a ajoute avek sikse.");
     }
@@ -850,10 +907,14 @@ public class GestionHopital {
         }
         System.out.print("Nouvo modpas : ");
         String nouveauMotDePasse = scanner.nextLine();
-
+        if (nouveauMotDePasse.isEmpty()) {
+            System.out.println("Modpas la pa ka vid.");
+            return;
+        }
         utilisateur.setMotDePasse(nouveauMotDePasse);
+        GestionFichiers.sauvegarderUtilisateurs();
 
-        System.out.println("Modpas la modifye avèk sikse.");
+        System.out.println("Modpas la modifye avek sikse.");
     }
 
     public static void supprimerUtilisateur() {
@@ -874,6 +935,7 @@ public class GestionHopital {
         if (supprime == null) {
             System.out.println("Itilizate sa poko egziste.");
         } else {
+            GestionFichiers.sauvegarderUtilisateurs();
             System.out.println("Itilizate sa siprime ak siskse.");
         }
 
@@ -883,7 +945,7 @@ public class GestionHopital {
 
         if (utilisateurs.isEmpty()) {
             System.out.println(
-                    "Pa gen okenn itilizatè ki anrejistre."
+                    "Pa gen okenn itilizate ki anrejistre."
             );
             return;
         }
@@ -903,7 +965,7 @@ public class GestionHopital {
 
         if (utilisateurs.isEmpty()) {
             System.out.println(
-                    "Pa gen okenn itilizatè ki disponib."
+                    "Pa gen okenn itilizate ki disponib."
             );
             return;
         }

@@ -80,8 +80,8 @@ public abstract class Personne {
         System.out.println("ID : " + getId());
         System.out.println("Non : " + getNom());
         System.out.println("Prenon : " + getPrenom());
-        System.out.println("Sèks : " + getSexe());
-        System.out.println("Adrès : " + getAdresse());
+        System.out.println("Seks : " + getSexe());
+        System.out.println("Adres : " + getAdresse());
         System.out.println("Dat nesans : " + getDateNaissance());
     }
 

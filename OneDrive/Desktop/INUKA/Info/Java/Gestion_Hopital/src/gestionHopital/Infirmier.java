@@ -31,21 +31,19 @@ public class Infirmier extends Personne {
         return utilisateur;
     }
 
-    // Redefinisyon metòd abstrè ki soti nan Personne
+    // Montre rezime dosye kote enfimyè sa a asosye.
     @Override
     public void accederAuxInformations(Map<Integer, Dossier> dossiers) {
-        System.out.println(
-                "Enfimyè a ap konsilte dosye pasyan an pou li ba li swen."
-        );
         boolean trouve = false;
+        System.out.println("\nDosye medikal kote enfimye sa a asosye :");
         for (Dossier d : dossiers.values()) {
             if (d.getInfirmier() == this) {
-                d.afficherDossier();
+                d.afficherRezime();
                 trouve = true;
             }
         }
         if (!trouve) {
-            System.out.println("Poko gen dosye pou enfimye.");
+            System.out.println("  Pa gen dosye medikal pou enfimye sa a.");
         }
     }
 }
